@@ -4,7 +4,7 @@ This project is a personal blog that used firebase firestore as a database. It c
 
 Liraries used in this project:
 
-- Reactjs.
+- Reactjs + Typescript.
 - Firebase Firestore.
 - Ant Design (To create UI).
 
