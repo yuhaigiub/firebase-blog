@@ -5,6 +5,7 @@ This project is a personal blog that used firebase firestore as a database. It c
 Liraries used in this project:
 
 - Reactjs + Typescript.
+- Redux Toolkit (State Management).
 - Firebase Firestore.
 - Ant Design (To create UI).
 
