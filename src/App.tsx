@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { Routes, Route } from "react-router-dom";
+
+import AddPostForm from "./features/posts/AddPostForm";
+import PostsList from "./features/posts/PostsList";
+import PageLayout from "./components/PageLayout";
+
+// styling
+import "./App.css";
+
+import EditPostForm from "./features/posts/EditPostForm";
+import SinglePostPage from "./features/posts/SinglePostPage";
+
+const App = () => {
+	return (
+		<>
+			<Routes>
+				<Route path="/" element={<PageLayout />}>
+					<Route index element={<PostsList />} />
+					<Route path="post">
+						<Route path="add" element={<AddPostForm />} />
+						<Route path=":postId" element={<SinglePostPage />} />
+					</Route>
+					<Route path="edit/:postId" element={<EditPostForm />} />
+				</Route>
+			</Routes>
+		</>
+	);
+};
 
 export default App;
+
+export interface PostWithoutId {
+	title: string;
+	content: string;
+	date: string;
+}
+
+export interface PostWithId extends PostWithoutId {
+	id: string;
+}
