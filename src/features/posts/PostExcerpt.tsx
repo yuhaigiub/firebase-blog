@@ -13,7 +13,6 @@ const PostExcerpt: React.FC<Props> = ({ post, onDeleteClick }) => {
 	return (
 		<Card
 			className="post-excerpt"
-			key={post.id}
 			bodyStyle={{ width: "50vw", boxShadow: "-6px 8px #DDDDDD" }}>
 			<Space direction="vertical" size="large">
 				<Link to={`post/${post.id}`}>
