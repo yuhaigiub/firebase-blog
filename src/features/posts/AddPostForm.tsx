@@ -66,7 +66,7 @@ const AddPostForm: React.FC = () => {
 							size="large"
 							onClick={onCreateClick}
 							disabled={!canSave}>
-							Update
+							Create
 						</Button>
 					</Form.Item>
 				</Form>
