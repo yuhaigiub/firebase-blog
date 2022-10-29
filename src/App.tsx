@@ -2,15 +2,16 @@ import React from "react";
 
 import { Routes, Route } from "react-router-dom";
 
-import AddPostForm from "./features/posts/AddPostForm";
-import PostsList from "./features/posts/PostsList";
-import PageLayout from "./components/PageLayout";
+import { addNewPost, updatePost } from "./features/posts/postsSlice";
 
 // styling
 import "./App.css";
 
-import EditPostForm from "./features/posts/EditPostForm";
+import PostsList from "./features/posts/PostsList";
+import PageLayout from "./components/PageLayout";
 import SinglePostPage from "./features/posts/SinglePostPage";
+import { ButtonFunction, PostWithoutId } from "./interface";
+import PostForm from "./features/posts/PostForm";
 
 const App = () => {
 	return (
@@ -19,10 +20,20 @@ const App = () => {
 				<Route path="/" element={<PageLayout />}>
 					<Route index element={<PostsList />} />
 					<Route path="post">
-						<Route path="add" element={<AddPostForm />} />
+						<Route
+							path="add"
+							element={
+								<PostForm formType="Create" onButtonClick={onCreateClick} />
+							}
+						/>
 						<Route path=":postId" element={<SinglePostPage />} />
 					</Route>
-					<Route path="edit/:postId" element={<EditPostForm />} />
+					<Route
+						path="edit/:postId"
+						element={
+							<PostForm formType="Update" onButtonClick={onUpdateClick} />
+						}
+					/>
 				</Route>
 			</Routes>
 		</>
@@ -31,12 +42,35 @@ const App = () => {
 
 export default App;
 
-export interface PostWithoutId {
-	title: string;
-	content: string;
-	date: string;
-}
+const onCreateClick: ButtonFunction = (
+	state: PostWithoutId,
+	dispatch: any,
+	formDispatch: any,
+	canSave: boolean
+) => {
+	if (canSave) {
+		dispatch(addNewPost(state))
+			.unwrap()
+			.catch((error: Error) => console.log(error.message));
+	}
+	formDispatch({ type: "reset" });
+};
 
-export interface PostWithId extends PostWithoutId {
-	id: string;
-}
+const onUpdateClick: ButtonFunction = (
+	state: PostWithoutId,
+	dispatch: any,
+	formDispatch: any,
+	canSave: boolean,
+	postId?: string,
+	navigate?: any
+) => {
+	if (canSave) {
+		dispatch(updatePost({ id: postId, ...state }))
+			.unwrap()
+			.then(() => {
+				navigate("/");
+			})
+			.catch((error: Error) => console.log(error.message));
+	}
+	formDispatch({ type: "reset" });
+};
