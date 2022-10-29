@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, Typography, Space, Button } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { PostWithId } from "../../App";
 
 import PostTime from "./PostTime";
 
+import { PostWithId } from "../../interface";
 const { Title, Paragraph } = Typography;
 
 const PostExcerpt: React.FC<Props> = ({ post, onDeleteClick }) => {

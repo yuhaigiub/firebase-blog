@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
 	getAllPosts,
@@ -11,10 +10,10 @@ import {
 } from "./postsSlice";
 
 //ant design
-import { Button, Space } from "antd";
+import { Space } from "antd";
 
 // type
-import type { PostWithId } from "../../App";
+import type { PostWithId } from "../../interface";
 import PostExcerpt from "./PostExcerpt";
 
 const PostsList: React.FC = () => {

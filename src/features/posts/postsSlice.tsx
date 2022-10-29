@@ -12,17 +12,7 @@ import { db } from "../../firebase-config";
 
 // type
 import { RootState } from "../../app/store";
-import { PostWithoutId } from "../../App";
-
-interface Post extends PostWithoutId {
-	id: string;
-}
-
-interface Posts {
-	posts: Post[];
-	status: string;
-	error: null | string;
-}
+import { PostWithoutId, PostWithId, Posts } from "../../interface";
 
 const postsRef = collection(db, "posts");
 // async thunks
@@ -61,15 +51,13 @@ export const deletePost: any = createAsyncThunk(
 
 export const updatePost: any = createAsyncThunk(
 	"posts/updatePost",
-	async (newPost: any) => {
-		const id = newPost.id;
-		console.log("new post is: " + JSON.stringify(id));
-		const postDoc = doc(db, "posts", id);
-		delete newPost.id;
+	async (newPost: PostWithId) => {
 		let min = 1;
 		newPost.date = sub(new Date(), { minutes: min++ }).toISOString();
-		await updateDoc(postDoc, newPost);
-		return { id, ...newPost };
+		const { id, ...updatedPost } = newPost;
+		const postDoc = doc(db, "posts", id);
+		await updateDoc(postDoc, updatedPost);
+		return newPost;
 	}
 );
 
